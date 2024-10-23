@@ -16,7 +16,7 @@ import {
   PanelHeader,
   PanelTitle,
   CloseButton,
-  RemoveButton
+  Checkbox
 } from './components/StyledComponents';
 
 const initialCategories = [
@@ -90,7 +90,6 @@ function App() {
   ]);
   const [panelOpen, setPanelOpen] = useState(false);
   const [currentCategory, setCurrentCategory] = useState('');
-  const [editingIndex, setEditingIndex] = useState(null);
   
   const containerRef = useRef(null);
 
@@ -107,66 +106,77 @@ function App() {
     ? [...initialCategories, ...extraCategories]
     : initialCategories;
 
-  const findProductIndexByCategory = (category) => {
-    return products.findIndex(product => product.category === category);
+  const isProductSelected = (productName, category) => {
+    return products.some(p => p.name === productName && p.category === category);
+  };
+
+  const findLastProductIndexForCategory = (category) => {
+    for (let i = products.length - 1; i >= 0; i--) {
+      if (products[i].category === category) {
+        return i;
+      }
+    }
+    return -1;
+  };
+
+  const addProduct = (productName, category) => {
+    const lastIndex = findLastProductIndexForCategory(category);
+    const newProduct = { name: productName, category };
+    
+    if (lastIndex === -1) {
+      // No products from this category yet, add to end
+      setProducts([...products, newProduct]);
+    } else {
+      // Insert after the last product of the same category
+      const newProducts = [...products];
+      newProducts.splice(lastIndex + 1, 0, newProduct);
+      setProducts(newProducts);
+    }
   };
 
   const handleCategoryClick = (category) => {
-    if (selectedCategories.includes(category)) {
-      // Show bottom panel with options
+    if (!selectedCategories.includes(category)) {
+      // First tap: just add default product and select category
+      setSelectedCategories([...selectedCategories, category]);
+      addProduct(categoryProducts[category][0], category);
+    } else {
+      // Subsequent taps: show options panel
       setCurrentCategory(category);
       setPanelOpen(true);
-      const existingIndex = findProductIndexByCategory(category);
-      setEditingIndex(existingIndex);
-    } else {
-      // Add a default product from this category
-      setSelectedCategories([...selectedCategories, category]);
-      setProducts([...products, {
-        name: categoryProducts[category][0],
-        category: category
-      }]);
     }
   };
 
-  const handleProductSelect = (product) => {
-    setPanelOpen(false);
-    if (editingIndex !== null) {
-      // Replace existing product
-      const newProducts = [...products];
-      newProducts[editingIndex] = {
-        name: product,
-        category: currentCategory
-      };
-      setProducts(newProducts);
+  const handleProductToggle = (productName) => {
+    const isSelected = isProductSelected(productName, currentCategory);
+    
+    if (isSelected) {
+      // Remove product
+      setProducts(products.filter(p => !(p.name === productName && p.category === currentCategory)));
+      
+      // If this was the last product in the category, remove the category
+      const remainingInCategory = products.filter(p => p.category === currentCategory).length - 1;
+      if (remainingInCategory === 0) {
+        setSelectedCategories(selectedCategories.filter(c => c !== currentCategory));
+      }
     } else {
-      // Add new product
-      setProducts([...products, {
-        name: product,
-        category: currentCategory
-      }]);
+      // Add product
+      addProduct(productName, currentCategory);
+      
+      // Make sure category is selected
+      if (!selectedCategories.includes(currentCategory)) {
+        setSelectedCategories([...selectedCategories, currentCategory]);
+      }
     }
-    setEditingIndex(null);
   };
 
   const handleTileClick = (index) => {
     const product = products[index];
     setCurrentCategory(product.category);
-    setEditingIndex(index);
     setPanelOpen(true);
   };
 
   const handleClose = () => {
     setPanelOpen(false);
-    setEditingIndex(null);
-  };
-
-  const handleRemoveCategory = () => {
-    const newProducts = products.filter(product => product.category !== currentCategory);
-    const newSelectedCategories = selectedCategories.filter(cat => cat !== currentCategory);
-    setProducts(newProducts);
-    setSelectedCategories(newSelectedCategories);
-    setPanelOpen(false);
-    setEditingIndex(null);
   };
 
   return (
@@ -222,25 +232,27 @@ function App() {
           </CloseButton>
         </PanelHeader>
         
-        {categoryProducts[currentCategory]?.map(product => (
-          <ProductTile 
-            key={product}
-            onClick={() => handleProductSelect(product)}
-            $clickable={true}
-          >
-            <ProductContent>
-              <ProductEmoji>{productEmojis[product]}</ProductEmoji>
-              <ProductInfo>
-                <ProductName>{product}</ProductName>
-                <CategoryLabel>{currentCategory}</CategoryLabel>
-              </ProductInfo>
-            </ProductContent>
-          </ProductTile>
-        ))}
-
-        <RemoveButton onClick={handleRemoveCategory}>
-          Remove {currentCategory} from basket
-        </RemoveButton>
+        {categoryProducts[currentCategory]?.map(product => {
+          const isSelected = isProductSelected(product, currentCategory);
+          return (
+            <ProductTile 
+              key={product}
+              onClick={() => handleProductToggle(product)}
+              $clickable={true}
+            >
+              <ProductContent>
+                <ProductEmoji>{productEmojis[product]}</ProductEmoji>
+                <ProductInfo>
+                  <ProductName>{product}</ProductName>
+                  <CategoryLabel>{currentCategory}</CategoryLabel>
+                </ProductInfo>
+              </ProductContent>
+              <Checkbox $checked={isSelected}>
+                {isSelected && <span className="material-icons">check</span>}
+              </Checkbox>
+            </ProductTile>
+          );
+        })}
       </BottomPanel>
     </AppContainer>
   );
