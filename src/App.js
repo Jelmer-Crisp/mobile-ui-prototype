@@ -1,5 +1,5 @@
 import { useState, useEffect, useRef } from 'react';
-import { AppContainer, Overlay } from './components/StyledComponents';
+import { AppContainer, ScrollableContainer, Overlay } from './components/StyledComponents';
 import { initialCategories, extraCategories, categoryProducts } from './data/groceryData';
 import { isProductSelected, addProduct } from './utils/productUtils';
 import ProductTileList from './components/ProductTileList';
@@ -79,12 +79,12 @@ function App() {
 
   return (
     <AppContainer ref={containerRef}>
-      <Overlay $isOpen={panelOpen} onClick={handleClose} />
-      
-      <ProductTileList 
-        products={products}
-        onTileClick={handleTileClick}
-      />
+      <ScrollableContainer>
+        <ProductTileList 
+          products={products}
+          onTileClick={handleTileClick}
+        />
+      </ScrollableContainer>
 
       <CategoryButtons 
         categories={categories}
@@ -94,6 +94,7 @@ function App() {
         onShowMore={() => setShowMore(true)}
       />
 
+      <Overlay $isOpen={panelOpen} onClick={handleClose} />
       <BottomOptionsPanel 
         isOpen={panelOpen}
         currentCategory={currentCategory}
