@@ -4,17 +4,14 @@ export const AppContainer = styled.div`
   padding: 20px;
   max-width: 600px;
   margin: 0 auto;
-  min-height: 100dvh;
-  display: flex;
-  flex-direction: column;
-  justify-content: flex-end;
+  height: 100dvh;
   box-sizing: border-box;
+  position: relative;
 `;
 
 export const ScrollableContainer = styled.div`
-  flex: 1;
+  height: calc(100% - env(safe-area-inset-bottom, 0px));
   overflow-y: auto;
-  margin-bottom: 20px;
   -webkit-overflow-scrolling: touch;
   padding-top: env(safe-area-inset-top, 20px);
 `;
@@ -123,9 +120,7 @@ export const ButtonContainer = styled.div`
   display: flex;
   flex-wrap: wrap;
   align-items: center;
-  margin-top: auto;
-  padding-top: 20px;
-  padding-bottom: env(safe-area-inset-bottom, 0px);
+  margin-top: 16px;
 `;
 
 export const BottomPanel = styled.div`

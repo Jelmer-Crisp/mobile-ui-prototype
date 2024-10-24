@@ -25,8 +25,8 @@ function App() {
 
   useEffect(() => {
     if (containerRef.current) {
-      window.scrollTo({
-        top: document.documentElement.scrollHeight,
+      containerRef.current.scrollTo({
+        top: containerRef.current.scrollHeight,
         behavior: 'smooth'
       });
     }
@@ -83,22 +83,21 @@ function App() {
   };
 
   return (
-    <AppContainer ref={containerRef}>
-      <ScrollableContainer>
+    <AppContainer>
+      <ScrollableContainer ref={containerRef}>
         <BasketHeader>Basket</BasketHeader>
         <ProductTileList 
           products={products}
           onTileClick={handleTileClick}
         />
+        <CategoryButtons 
+          categories={categories}
+          selectedCategories={selectedCategories}
+          onCategoryClick={handleCategoryClick}
+          showMore={showMore}
+          onShowMore={() => setShowMore(true)}
+        />
       </ScrollableContainer>
-
-      <CategoryButtons 
-        categories={categories}
-        selectedCategories={selectedCategories}
-        onCategoryClick={handleCategoryClick}
-        showMore={showMore}
-        onShowMore={() => setShowMore(true)}
-      />
 
       <Overlay $isOpen={panelOpen} onClick={handleClose} />
       <BottomOptionsPanel 
