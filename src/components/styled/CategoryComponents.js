@@ -1,10 +1,10 @@
 import styled from 'styled-components';
 
 export const CategoryButton = styled.button`
-  background: ${props => props.$selected ? '#2196f3' : 'white'};
-  color: ${props => props.$selected ? 'white' : '#2196f3'};
-  border: 1px solid #2196f3;
-  border-radius: 20px;
+  background: ${props => props.$selected ? '#E6E6E6' : 'white'};
+  color: #1A1A1A;
+  border: 1px solid #E6E6E6;
+  border-radius: 8px;
   padding: 8px 16px;
   margin: 0 8px 8px 0;
   font-size: 14px;
@@ -27,7 +27,7 @@ export const ReloadIcon = styled.span`
 export const MoreLink = styled.button`
   background: none;
   border: none;
-  color: #2196f3;
+  color: #1A1A1A;
   padding: 8px;
   font-size: 14px;
   cursor: pointer;

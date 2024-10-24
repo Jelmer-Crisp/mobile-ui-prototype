@@ -27,7 +27,8 @@ const VersionLink = styled.button`
   padding: 0;
   font-size: 14px;
   cursor: pointer;
-  text-decoration: ${props => props.$active ? 'underline' : 'none'};
+  text-decoration: none;
+  font-weight: ${props => props.$active ? '600' : '400'};
 `;
 
 function App() {
