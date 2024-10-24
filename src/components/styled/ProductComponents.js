@@ -89,3 +89,35 @@ export const CategoryLabel = styled.div`
 export const ProductList = styled.div`
   margin-bottom: 16px;
 `;
+
+export const QuantityControls = styled.div`
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-right: 16px;
+`;
+
+export const QuantityButton = styled.button`
+  width: 24px;
+  height: 24px;
+  border-radius: 12px;
+  border: none;
+  background: #f0f0f0;
+  color: #333;
+  font-size: 16px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  
+  &:active {
+    background: #e0e0e0;
+  }
+`;
+
+export const QuantityDisplay = styled.span`
+  min-width: 24px;
+  text-align: center;
+  font-size: 14px;
+  color: #333;
+`;

@@ -13,7 +13,7 @@ export const findLastProductIndexForCategory = (products, category) => {
 
 export const addProduct = (products, productName, category) => {
   const lastIndex = findLastProductIndexForCategory(products, category);
-  const newProduct = { name: productName, category };
+  const newProduct = { name: productName, category, quantity: 1 };
   
   if (lastIndex === -1) {
     // No products from this category yet, add to end
