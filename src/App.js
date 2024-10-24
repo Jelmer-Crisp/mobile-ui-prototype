@@ -5,14 +5,19 @@ import { isProductSelected, addProduct } from './utils/productUtils';
 import ProductTileList from './components/ProductTileList';
 import CategoryButtons from './components/CategoryButtons';
 import BottomOptionsPanel from './components/BottomOptionsPanel';
+import styled from 'styled-components';
+
+const BasketHeader = styled.h2`
+  color: #333;
+  margin: 0 0 16px 0;
+  font-size: 20px;
+  font-weight: 600;
+`;
 
 function App() {
   const [showMore, setShowMore] = useState(false);
-  const [selectedCategories, setSelectedCategories] = useState(['Fruits', 'Milk']);
-  const [products, setProducts] = useState([
-    { name: 'Apples', category: 'Fruits' },
-    { name: 'Full Fat Milk', category: 'Milk' }
-  ]);
+  const [selectedCategories, setSelectedCategories] = useState([]);
+  const [products, setProducts] = useState([]);
   const [panelOpen, setPanelOpen] = useState(false);
   const [currentCategory, setCurrentCategory] = useState('');
   
@@ -80,6 +85,7 @@ function App() {
   return (
     <AppContainer ref={containerRef}>
       <ScrollableContainer>
+        <BasketHeader>Basket</BasketHeader>
         <ProductTileList 
           products={products}
           onTileClick={handleTileClick}
