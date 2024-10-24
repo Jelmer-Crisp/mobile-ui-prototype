@@ -94,30 +94,41 @@ export const QuantityControls = styled.div`
   display: flex;
   align-items: center;
   gap: 8px;
-  margin-right: 16px;
+  ${props => props.$inList && 'margin-right: 16px;'}
 `;
 
 export const QuantityButton = styled.button`
-  width: 24px;
-  height: 24px;
-  border-radius: 12px;
+  width: 32px;
+  height: 32px;
+  border-radius: 16px;
   border: none;
   background: #f0f0f0;
   color: #333;
-  font-size: 16px;
+  font-size: 18px;
   display: flex;
   align-items: center;
   justify-content: center;
   cursor: pointer;
+  transition: all 0.2s ease;
+  
+  &:hover {
+    background: #e4e4e4;
+  }
   
   &:active {
-    background: #e0e0e0;
+    background: #d8d8d8;
+    transform: scale(0.95);
+  }
+
+  .material-icons {
+    font-size: 20px;
   }
 `;
 
 export const QuantityDisplay = styled.span`
   min-width: 24px;
   text-align: center;
-  font-size: 14px;
+  font-size: 16px;
+  font-weight: 500;
   color: #333;
 `;

@@ -41,11 +41,11 @@ const ProductTileList = ({ products, onTileClick, onQuantityChange }) => {
                   <CategoryLabel>{product.category}</CategoryLabel>
                 </ProductInfo>
               </ProductContent>
-              <QuantityControls>
+              <QuantityControls $inList={true}>
                 <QuantityButton 
                   onClick={(e) => handleQuantityClick(e, index, -1)}
                 >
-                  -
+                  <span className="material-icons">remove</span>
                 </QuantityButton>
                 <QuantityDisplay>
                   {product.quantity || 1}
@@ -53,7 +53,7 @@ const ProductTileList = ({ products, onTileClick, onQuantityChange }) => {
                 <QuantityButton 
                   onClick={(e) => handleQuantityClick(e, index, 1)}
                 >
-                  +
+                  <span className="material-icons">add</span>
                 </QuantityButton>
               </QuantityControls>
               <ReloadIcon className="material-icons">

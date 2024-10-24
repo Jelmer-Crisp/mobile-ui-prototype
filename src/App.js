@@ -79,16 +79,27 @@ function App() {
     }
   };
 
-  const handleProductToggle = (productName) => {
+  const handleProductToggle = (productName, newQuantity) => {
     const selected = isProductSelected(products, productName, currentCategory);
     
     if (selected) {
-      const newProducts = products.filter(p => !(p.name === productName && p.category === currentCategory));
-      setProducts(newProducts);
-      
-      const remainingInCategory = newProducts.filter(p => p.category === currentCategory).length;
-      if (remainingInCategory === 0) {
-        setSelectedCategories(selectedCategories.filter(c => c !== currentCategory));
+      if (newQuantity !== undefined) {
+        // Update quantity
+        const newProducts = products.map(p => 
+          p.name === productName && p.category === currentCategory
+            ? { ...p, quantity: newQuantity }
+            : p
+        );
+        setProducts(newProducts);
+      } else {
+        // Remove product
+        const newProducts = products.filter(p => !(p.name === productName && p.category === currentCategory));
+        setProducts(newProducts);
+        
+        const remainingInCategory = newProducts.filter(p => p.category === currentCategory).length;
+        if (remainingInCategory === 0) {
+          setSelectedCategories(selectedCategories.filter(c => c !== currentCategory));
+        }
       }
     } else {
       setProducts(addProduct(products, productName, currentCategory));
