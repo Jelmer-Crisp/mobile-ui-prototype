@@ -17,6 +17,7 @@ export const ProductTile = styled.div`
   align-items: center;
   justify-content: space-between;
   cursor: ${props => props.$clickable ? 'pointer' : 'default'};
+  transition: all 0.2s ease;
 
   &:active {
     ${props => props.$clickable && 'transform: scale(0.99);'}
@@ -24,6 +25,38 @@ export const ProductTile = styled.div`
 
   &:last-child {
     margin-bottom: 0;
+  }
+
+  &.tile-enter {
+    opacity: 0;
+    transform: translateY(-10px);
+    height: 0;
+    padding: 0;
+    margin: 0;
+  }
+
+  &.tile-enter-active {
+    opacity: 1;
+    transform: translateY(0);
+    height: 72px;
+    padding: 16px;
+    margin-bottom: 16px;
+  }
+
+  &.tile-exit {
+    opacity: 1;
+    transform: translateY(0);
+    height: 72px;
+    padding: 16px;
+    margin-bottom: 16px;
+  }
+
+  &.tile-exit-active {
+    opacity: 0;
+    transform: translateY(-10px);
+    height: 0;
+    padding: 0;
+    margin: 0;
   }
 `;
 
@@ -51,4 +84,8 @@ export const ProductName = styled.div`
 export const CategoryLabel = styled.div`
   color: #999;
   font-size: 12px;
+`;
+
+export const ProductList = styled.div`
+  margin-bottom: 16px;
 `;

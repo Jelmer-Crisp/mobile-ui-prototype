@@ -26,7 +26,7 @@ const CategoryButtons = ({ categories, selectedCategories, onCategoryClick, show
             {category}
             {version === 1 && selectedCategories.includes(category) && (
               <ReloadIcon className="material-icons">
-                refresh
+                swap_horiz
               </ReloadIcon>
             )}
           </CategoryButton>
