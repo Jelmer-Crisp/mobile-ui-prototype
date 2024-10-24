@@ -1,5 +1,5 @@
 import React from 'react';
-import { ButtonContainer, CategoryButton, MoreLink, ReloadIcon } from './StyledComponents';
+import { ButtonContainer, CategoryButton, MoreLink, ReloadIcon } from './styled';
 import styled from 'styled-components';
 
 const LabelText = styled.span`
@@ -13,18 +13,18 @@ const LabelText = styled.span`
   line-height: 1.2;
 `;
 
-const CategoryButtons = ({ categories, selectedCategories, onCategoryClick, showMore, onShowMore }) => {
+const CategoryButtons = ({ categories, selectedCategories, onCategoryClick, showMore, onShowMore, version }) => {
   return (
     <ButtonContainer>
       {categories.map((category, index) => (
         <React.Fragment key={category}>
           {index === 0 && <LabelText>Also needed?</LabelText>}
           <CategoryButton
-            $selected={selectedCategories.includes(category)}
+            $selected={version === 1 && selectedCategories.includes(category)}
             onClick={() => onCategoryClick(category)}
           >
             {category}
-            {selectedCategories.includes(category) && (
+            {version === 1 && selectedCategories.includes(category) && (
               <ReloadIcon className="material-icons">
                 refresh
               </ReloadIcon>
@@ -32,7 +32,7 @@ const CategoryButtons = ({ categories, selectedCategories, onCategoryClick, show
           </CategoryButton>
         </React.Fragment>
       ))}
-      {!showMore && (
+      {!showMore && categories.length > 0 && (
         <MoreLink onClick={onShowMore}>
           More...
         </MoreLink>

@@ -1,5 +1,6 @@
 import React from 'react';
-import { BottomPanel, PanelHeader, PanelTitle, CloseButton, ProductTile, ProductContent, ProductEmoji, ProductInfo, ProductName, CategoryLabel, Checkbox } from './StyledComponents';
+import { BottomPanel, PanelHeader, PanelTitle, CloseButton } from './styled';
+import { ProductTile, ProductContent, ProductEmoji, ProductInfo, ProductName, CategoryLabel, Checkbox } from './styled';
 import { productEmojis } from '../data/groceryData';
 import { isProductSelected } from '../utils/productUtils';
 

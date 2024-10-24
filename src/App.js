@@ -1,5 +1,5 @@
 import { useState, useEffect, useRef } from 'react';
-import { AppContainer, ScrollableContainer, Overlay } from './components/StyledComponents';
+import { AppContainer, ScrollableContainer, Overlay } from './components/styled';
 import { initialCategories, extraCategories, categoryProducts } from './data/groceryData';
 import { isProductSelected, addProduct } from './utils/productUtils';
 import ProductTileList from './components/ProductTileList';
@@ -14,12 +14,30 @@ const BasketHeader = styled.h2`
   font-weight: 600;
 `;
 
+const VersionToggle = styled.div`
+  display: flex;
+  gap: 16px;
+  margin-bottom: 16px;
+`;
+
+const VersionLink = styled.button`
+  background: none;
+  border: none;
+  color: #2196f3;
+  padding: 0;
+  font-size: 14px;
+  cursor: pointer;
+  text-decoration: ${props => props.$active ? 'underline' : 'none'};
+`;
+
 function App() {
   const [showMore, setShowMore] = useState(false);
   const [selectedCategories, setSelectedCategories] = useState([]);
   const [products, setProducts] = useState([]);
   const [panelOpen, setPanelOpen] = useState(false);
   const [currentCategory, setCurrentCategory] = useState('');
+  const [hiddenCategories, setHiddenCategories] = useState([]);
+  const [version, setVersion] = useState(1);
   
   const containerRef = useRef(null);
 
@@ -37,14 +55,24 @@ function App() {
     : initialCategories;
 
   const handleCategoryClick = (category) => {
-    if (!selectedCategories.includes(category)) {
-      // First tap: just add default product and select category
+    if (version === 1) {
+      // Version 1: Original behavior - keep button and show reload icon
+      if (!selectedCategories.includes(category)) {
+        setSelectedCategories([...selectedCategories, category]);
+        setProducts(addProduct(products, categoryProducts[category][0], category));
+      } else {
+        setCurrentCategory(category);
+        setPanelOpen(true);
+      }
+    } else {
+      // Version 2: Hide button behavior
       setSelectedCategories([...selectedCategories, category]);
       setProducts(addProduct(products, categoryProducts[category][0], category));
-    } else {
-      // Subsequent taps: show options panel
-      setCurrentCategory(category);
-      setPanelOpen(true);
+      setHiddenCategories([...hiddenCategories, category]);
+
+      if ([...hiddenCategories, category].length === 3 && !showMore) {
+        setShowMore(true);
+      }
     }
   };
 
@@ -82,20 +110,44 @@ function App() {
     setPanelOpen(false);
   };
 
+  const handleVersionChange = (newVersion) => {
+    setVersion(newVersion);
+    // Reset states when switching versions
+    setSelectedCategories([]);
+    setProducts([]);
+    setHiddenCategories([]);
+    setShowMore(false);
+  };
+
   return (
     <AppContainer>
       <ScrollableContainer ref={containerRef}>
+        <VersionToggle>
+          <VersionLink 
+            onClick={() => handleVersionChange(1)} 
+            $active={version === 1}
+          >
+            Version 1
+          </VersionLink>
+          <VersionLink 
+            onClick={() => handleVersionChange(2)} 
+            $active={version === 2}
+          >
+            Version 2
+          </VersionLink>
+        </VersionToggle>
         <BasketHeader>Basket</BasketHeader>
         <ProductTileList 
           products={products}
           onTileClick={handleTileClick}
         />
         <CategoryButtons 
-          categories={categories}
+          categories={version === 1 ? categories : categories.filter(category => !hiddenCategories.includes(category))}
           selectedCategories={selectedCategories}
           onCategoryClick={handleCategoryClick}
           showMore={showMore}
           onShowMore={() => setShowMore(true)}
+          version={version}
         />
       </ScrollableContainer>
 

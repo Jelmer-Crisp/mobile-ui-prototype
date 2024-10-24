@@ -1,5 +1,6 @@
 import React from 'react';
-import { ProductTile, ProductContent, ProductEmoji, ProductInfo, ProductName, CategoryLabel, ReloadIcon } from './StyledComponents';
+import { ProductTile, ProductContent, ProductEmoji, ProductInfo, ProductName, CategoryLabel } from './styled';
+import { ReloadIcon } from './styled';
 import { productEmojis } from '../data/groceryData';
 
 const ProductTileList = ({ products, onTileClick }) => {
