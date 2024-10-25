@@ -58,7 +58,7 @@ const BottomOptionsPanel = ({
   return (
     <BottomPanel $isOpen={isOpen}>
       <PanelHeader>
-        <PanelTitle>{currentCategory} Options</PanelTitle>
+        <PanelTitle>{currentCategory} opties</PanelTitle>
         <CloseButton onClick={onClose}>
           <span className="material-icons">close</span>
         </CloseButton>

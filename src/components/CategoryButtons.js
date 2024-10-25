@@ -1,40 +1,25 @@
 import React from 'react';
-import { ButtonContainer, CategoryButton, MoreLink, ReloadIcon } from './styled';
-import styled from 'styled-components';
-
-const LabelText = styled.span`
-  color: #666;
-  margin-right: 8px;
-  margin-bottom: 8px;  /* Match the button's bottom margin */
-  font-size: 14px;
-  display: inline-flex;
-  align-items: center;
-  padding: 8px 0;
-  line-height: 1.2;
-`;
+import { CategoryButton, ButtonContainer, MoreLink, CategoryPrompt, ReloadIcon } from './styled/CategoryComponents';
 
 const CategoryButtons = ({ categories, selectedCategories, onCategoryClick, showMore, onShowMore, version }) => {
   return (
     <ButtonContainer>
-      {categories.map((category, index) => (
-        <React.Fragment key={category}>
-          {index === 0 && <LabelText>Also needed?</LabelText>}
-          <CategoryButton
-            $selected={version === 1 && selectedCategories.includes(category)}
-            onClick={() => onCategoryClick(category)}
-          >
-            {category}
-            {version === 1 && selectedCategories.includes(category) && (
-              <ReloadIcon className="material-icons">
-                swap_horiz
-              </ReloadIcon>
-            )}
-          </CategoryButton>
-        </React.Fragment>
+      {version === 1 && <CategoryPrompt>Ook nodig?</CategoryPrompt>}
+      {categories.map(category => (
+        <CategoryButton
+          key={category}
+          onClick={() => onCategoryClick(category)}
+          $selected={selectedCategories.includes(category)}
+        >
+          {category}
+          {selectedCategories.includes(category) && (
+            <ReloadIcon className="material-icons">swap_horiz</ReloadIcon>
+          )}
+        </CategoryButton>
       ))}
-      {!showMore && categories.length > 0 && (
+      {!showMore && (
         <MoreLink onClick={onShowMore}>
-          More...
+          Meer...
         </MoreLink>
       )}
     </ButtonContainer>

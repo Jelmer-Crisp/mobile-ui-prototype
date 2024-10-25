@@ -160,16 +160,16 @@ function App() {
             onClick={() => handleVersionChange(1)} 
             $active={version === 1}
           >
-            Version 1
+            Versie 1
           </VersionLink>
           <VersionLink 
             onClick={() => handleVersionChange(2)} 
             $active={version === 2}
           >
-            Version 2
+            Versie 2
           </VersionLink>
         </VersionToggle>
-        <BasketHeader>Basket</BasketHeader>
+        <BasketHeader>Mandje</BasketHeader>
         <ProductTileList 
           products={products}
           onTileClick={handleTileClick}

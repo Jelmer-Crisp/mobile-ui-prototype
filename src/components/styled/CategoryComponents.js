@@ -19,6 +19,13 @@ export const CategoryButton = styled.button`
   }
 `;
 
+export const CategoryPrompt = styled.div`
+  color: #1A1A1A;
+  padding: 8px 0;
+  margin: 0 8px 8px 0;
+  font-size: 14px;
+`;
+
 export const ReloadIcon = styled.span`
   font-size: 16px !important;
   font-family: 'Material Icons';
@@ -32,6 +39,7 @@ export const MoreLink = styled.button`
   font-size: 14px;
   cursor: pointer;
   margin-bottom: 8px;
+  text-decoration: underline;
 `;
 
 export const ButtonContainer = styled.div`

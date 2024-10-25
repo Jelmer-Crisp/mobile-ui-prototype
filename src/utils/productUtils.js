@@ -11,8 +11,8 @@ export const findLastProductIndexForCategory = (products, category) => {
   return -1;
 };
 
-const DEFAULT_QUANTITY_TWO_CATEGORIES = ['Milk', 'Vegetables'];
-const MULTI_PRODUCT_CATEGORIES = ['Snacks', 'Sweets', 'Fruits', 'Bread'];
+const DEFAULT_QUANTITY_TWO_CATEGORIES = ['Melk', 'Groenten'];
+const MULTI_PRODUCT_CATEGORIES = ['Snacks', 'Snoep', 'Fruit', 'Brood'];
 
 export const addProduct = (products, productName, category) => {
   const lastIndex = findLastProductIndexForCategory(products, category);
