@@ -16,6 +16,12 @@ import { ReloadIcon } from './styled';
 import { productEmojis } from '../data/groceryData';
 
 const ProductTileList = ({ products, onTileClick, onQuantityChange }) => {
+  // Create refs array at the component level
+  const nodeRefs = React.useMemo(
+    () => products.map(() => React.createRef()),
+    [products.length] // Only recreate if number of products changes
+  );
+
   const handleQuantityClick = (e, index, change) => {
     e.stopPropagation(); // Prevent tile click when clicking quantity buttons
     onQuantityChange(index, change);
@@ -29,8 +35,10 @@ const ProductTileList = ({ products, onTileClick, onQuantityChange }) => {
             key={`${product.name}-${index}`}
             timeout={200}
             classNames="tile"
+            nodeRef={nodeRefs[index]}
           >
             <ProductTile 
+              ref={nodeRefs[index]}
               onClick={() => onTileClick(index)}
               $clickable={true}
             >
