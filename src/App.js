@@ -45,13 +45,16 @@ function App() {
 
   useEffect(() => {
     if (containerRef.current && shouldScroll) {
-      containerRef.current.scrollTo({
-        top: containerRef.current.scrollHeight,
-        behavior: 'smooth'
-      });
-      setShouldScroll(false);
+      // Add a small delay to ensure DOM has updated
+      setTimeout(() => {
+        containerRef.current.scrollTo({
+          top: containerRef.current.scrollHeight,
+          behavior: 'smooth'
+        });
+        setShouldScroll(false);
+      }, 100);
     }
-  }, [products, shouldScroll]);
+  }, [products, shouldScroll, visibleCategoryCount]);
 
   const visibleCategories = allCategories.slice(0, visibleCategoryCount);
 
@@ -66,6 +69,7 @@ function App() {
         const categoryIndex = visibleCategories.indexOf(category);
         if (categoryIndex >= visibleCategoryCount - 3 && visibleCategoryCount < allCategories.length) {
           setVisibleCategoryCount(prev => Math.min(prev + 3, allCategories.length));
+          setShouldScroll(true);
         }
       } else {
         setCurrentCategory(category);
@@ -79,12 +83,14 @@ function App() {
 
       if ([...hiddenCategories, category].length === 3 && visibleCategoryCount < allCategories.length) {
         setVisibleCategoryCount(prev => Math.min(prev + 3, allCategories.length));
+        setShouldScroll(true);
       }
     }
   };
 
   const handleShowMore = () => {
     setVisibleCategoryCount(prev => Math.min(prev + 3, allCategories.length));
+    setShouldScroll(true);
   };
 
   const handleProductToggle = (productName, newQuantity) => {
@@ -187,7 +193,7 @@ function App() {
           categories={version === 1 ? visibleCategories : visibleCategories.filter(category => !hiddenCategories.includes(category))}
           selectedCategories={selectedCategories}
           onCategoryClick={handleCategoryClick}
-          showMore={visibleCategoryCount > allCategories.length}
+          showMore={visibleCategoryCount >= allCategories.length}
           onShowMore={handleShowMore}
           version={version}
         />
