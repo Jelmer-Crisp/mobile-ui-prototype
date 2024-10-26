@@ -5,14 +5,13 @@ import {
   ProductContent, 
   ProductEmoji, 
   ProductInfo, 
-  ProductName, 
-  CategoryLabel, 
+  ProductName,
   ProductList,
   QuantityControls,
   QuantityButton,
   QuantityDisplay
-} from './styled';
-import { ReloadIcon } from './styled';
+} from './styled/ProductComponents';
+import { ReloadIcon } from './styled/CategoryComponents';
 import { productEmojis } from '../data/groceryData';
 
 const ProductTileList = ({ products, onTileClick, onQuantityChange }) => {
@@ -46,24 +45,23 @@ const ProductTileList = ({ products, onTileClick, onQuantityChange }) => {
                 <ProductEmoji>{productEmojis[product.name]}</ProductEmoji>
                 <ProductInfo>
                   <ProductName>{product.name}</ProductName>
-                  <CategoryLabel>{product.category}</CategoryLabel>
+                  <QuantityControls>
+                    <QuantityButton 
+                      onClick={(e) => handleQuantityClick(e, index, -1)}
+                    >
+                      <span className="material-icons">remove</span>
+                    </QuantityButton>
+                    <QuantityDisplay>
+                      {product.quantity || 1}
+                    </QuantityDisplay>
+                    <QuantityButton 
+                      onClick={(e) => handleQuantityClick(e, index, 1)}
+                    >
+                      <span className="material-icons">add</span>
+                    </QuantityButton>
+                  </QuantityControls>
                 </ProductInfo>
               </ProductContent>
-              <QuantityControls $inList={true}>
-                <QuantityButton 
-                  onClick={(e) => handleQuantityClick(e, index, -1)}
-                >
-                  <span className="material-icons">remove</span>
-                </QuantityButton>
-                <QuantityDisplay>
-                  {product.quantity || 1}
-                </QuantityDisplay>
-                <QuantityButton 
-                  onClick={(e) => handleQuantityClick(e, index, 1)}
-                >
-                  <span className="material-icons">add</span>
-                </QuantityButton>
-              </QuantityControls>
               <ReloadIcon className="material-icons">
                 swap_horiz
               </ReloadIcon>

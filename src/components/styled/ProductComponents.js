@@ -9,22 +9,18 @@ export const Checkbox = styled.div`
 
 export const ProductTile = styled.div`
   background: white;
-  border-radius: 12px;
   padding: 16px;
-  margin-bottom: 16px;
+  width: 100%;
   box-shadow: 0 2px 4px rgba(0,0,0,0.1);
   display: flex;
   align-items: center;
-  justify-content: space-between;
   cursor: ${props => props.$clickable ? 'pointer' : 'default'};
   transition: all 0.2s ease;
+  margin-bottom: 0;
+  border-bottom: 1px solid #E6E6E6;
 
   &:active {
     ${props => props.$clickable && 'transform: scale(0.99);'}
-  }
-
-  &:last-child {
-    margin-bottom: 0;
   }
 
   &.tile-enter {
@@ -32,23 +28,20 @@ export const ProductTile = styled.div`
     transform: translateY(-10px);
     height: 0;
     padding: 0;
-    margin: 0;
   }
 
   &.tile-enter-active {
     opacity: 1;
     transform: translateY(0);
-    height: 72px;
+    height: auto;
     padding: 16px;
-    margin-bottom: 16px;
   }
 
   &.tile-exit {
     opacity: 1;
     transform: translateY(0);
-    height: 72px;
+    height: auto;
     padding: 16px;
-    margin-bottom: 16px;
   }
 
   &.tile-exit-active {
@@ -56,7 +49,6 @@ export const ProductTile = styled.div`
     transform: translateY(-10px);
     height: 0;
     padding: 0;
-    margin: 0;
   }
 `;
 
@@ -67,14 +59,14 @@ export const ProductContent = styled.div`
 `;
 
 export const ProductEmoji = styled.span`
-  font-size: 24px;
-  margin-right: 16px;
+  font-size: 40px;
+  margin: 0 24px 0 6px;
 `;
 
 export const ProductInfo = styled.div`
   display: flex;
   flex-direction: column;
-  gap: 4px;
+  gap: 8px;
 `;
 
 export const ProductName = styled.div`
@@ -87,14 +79,15 @@ export const CategoryLabel = styled.div`
 `;
 
 export const ProductList = styled.div`
-  margin-bottom: 16px;
+  display: flex;
+  flex-direction: column;
+  width: 100%;
 `;
 
 export const QuantityControls = styled.div`
   display: flex;
   align-items: center;
   gap: 8px;
-  ${props => props.$inList && 'margin-right: 16px;'}
 `;
 
 export const QuantityButton = styled.button`
