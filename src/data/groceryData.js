@@ -1,10 +1,7 @@
-export const initialCategories = [
+export const allCategories = [
   'Kaas', 'Melk', 'Noten', 'Sappen', 'Brood', 
   'Appels', 'Citrusvruchten', 'Zacht Fruit',
-  'Wortel', 'Kruiden', 'Bladgroenten'
-];
-
-export const extraCategories = [
+  'Wortel', 'Kruiden', 'Bladgroenten',
   'Kip', 'Rund', 'Varken',
   'Verse Vis', 'Schaaldieren', 'Gebakken Vis',
   'Snacks', 'Dranken', 'Snoep'

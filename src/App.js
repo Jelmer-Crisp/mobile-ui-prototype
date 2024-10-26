@@ -1,6 +1,6 @@
 import { useState, useEffect, useRef } from 'react';
 import { AppContainer, ScrollableContainer, Overlay } from './components/styled';
-import { initialCategories, extraCategories, categoryProducts } from './data/groceryData';
+import { allCategories, categoryProducts } from './data/groceryData';
 import { isProductSelected, addProduct } from './utils/productUtils';
 import ProductTileList from './components/ProductTileList';
 import CategoryButtons from './components/CategoryButtons';
@@ -32,7 +32,7 @@ const VersionLink = styled.button`
 `;
 
 function App() {
-  const [showMore, setShowMore] = useState(false);
+  const [visibleCategoryCount, setVisibleCategoryCount] = useState(5);
   const [selectedCategories, setSelectedCategories] = useState([]);
   const [products, setProducts] = useState([]);
   const [panelOpen, setPanelOpen] = useState(false);
@@ -53,9 +53,7 @@ function App() {
     }
   }, [products, shouldScroll]);
 
-  const categories = showMore 
-    ? [...initialCategories, ...extraCategories]
-    : initialCategories;
+  const visibleCategories = allCategories.slice(0, visibleCategoryCount);
 
   const handleCategoryClick = (category) => {
     if (version === 1) {
@@ -63,6 +61,12 @@ function App() {
         setSelectedCategories([...selectedCategories, category]);
         setProducts(addProduct(products, categoryProducts[category][0], category));
         setShouldScroll(true);
+
+        // Check if this is one of the last three visible categories
+        const categoryIndex = visibleCategories.indexOf(category);
+        if (categoryIndex >= visibleCategoryCount - 3 && visibleCategoryCount < allCategories.length) {
+          setVisibleCategoryCount(prev => Math.min(prev + 3, allCategories.length));
+        }
       } else {
         setCurrentCategory(category);
         setPanelOpen(true);
@@ -73,10 +77,14 @@ function App() {
       setHiddenCategories([...hiddenCategories, category]);
       setShouldScroll(true);
 
-      if ([...hiddenCategories, category].length === 3 && !showMore) {
-        setShowMore(true);
+      if ([...hiddenCategories, category].length === 3 && visibleCategoryCount < allCategories.length) {
+        setVisibleCategoryCount(prev => Math.min(prev + 3, allCategories.length));
       }
     }
+  };
+
+  const handleShowMore = () => {
+    setVisibleCategoryCount(prev => Math.min(prev + 3, allCategories.length));
   };
 
   const handleProductToggle = (productName, newQuantity) => {
@@ -149,7 +157,7 @@ function App() {
     setSelectedCategories([]);
     setProducts([]);
     setHiddenCategories([]);
-    setShowMore(false);
+    setVisibleCategoryCount(5);
   };
 
   return (
@@ -176,11 +184,11 @@ function App() {
           onQuantityChange={handleQuantityChange}
         />
         <CategoryButtons 
-          categories={version === 1 ? categories : categories.filter(category => !hiddenCategories.includes(category))}
+          categories={version === 1 ? visibleCategories : visibleCategories.filter(category => !hiddenCategories.includes(category))}
           selectedCategories={selectedCategories}
           onCategoryClick={handleCategoryClick}
-          showMore={showMore}
-          onShowMore={() => setShowMore(true)}
+          showMore={visibleCategoryCount > allCategories.length}
+          onShowMore={handleShowMore}
           version={version}
         />
       </ScrollableContainer>
