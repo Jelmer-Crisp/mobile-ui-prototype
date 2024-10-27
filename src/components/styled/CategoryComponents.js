@@ -39,12 +39,39 @@ export const MoreLink = styled.button`
   font-size: 14px;
   cursor: pointer;
   margin-bottom: 8px;
-  text-decoration: underline;
+  display: flex;
+  align-items: center;
+  gap: 4px;
 `;
 
 export const ButtonContainer = styled.div`
   display: flex;
   flex-wrap: wrap;
-  align-items: center;
+  align-content: flex-end;
   margin-top: 16px;
+  max-height: ${props => props.$expanded ? 'none' : '171px'};
+  overflow-y: auto;
+  position: relative;
+`;
+
+export const CategorySkrim = styled.button`
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 132px;
+  height: 40px;
+  background: #f5f5f5;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 4px;
+  border: none;
+  color: #1A1A1A;
+  font-size: 14px;
+  cursor: pointer;
+`;
+
+export const MaterialIcon = styled.span`
+  font-family: 'Material Icons';
+  font-size: 18px;
 `;

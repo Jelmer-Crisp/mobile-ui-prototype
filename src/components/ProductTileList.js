@@ -63,7 +63,7 @@ const ProductTileList = ({ products, onTileClick, onQuantityChange }) => {
                 </ProductInfo>
               </ProductContent>
               <ReloadIcon className="material-icons">
-                swap_horiz
+                more_horiz
               </ReloadIcon>
             </ProductTile>
           </CSSTransition>
