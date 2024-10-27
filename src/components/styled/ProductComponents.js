@@ -18,6 +18,7 @@ export const ProductTile = styled.div`
   transition: all 0.2s ease;
   margin-bottom: 0;
   border-bottom: 1px solid #E6E6E6;
+  box-sizing: border-box;
 
   &:active {
     ${props => props.$clickable && 'transform: scale(0.99);'}
@@ -56,6 +57,7 @@ export const ProductContent = styled.div`
   display: flex;
   align-items: center;
   flex: 1;
+  padding: 0 4px;
 `;
 
 export const ProductEmoji = styled.span`
@@ -81,13 +83,15 @@ export const CategoryLabel = styled.div`
 export const ProductList = styled.div`
   display: flex;
   flex-direction: column;
-  width: 100%;
+  width: 100vw;
+  margin: 0 -20px 20px -20px;
 `;
 
 export const QuantityControls = styled.div`
   display: flex;
   align-items: center;
   gap: 8px;
+  margin-right: 4px;
 `;
 
 export const QuantityButton = styled.button`

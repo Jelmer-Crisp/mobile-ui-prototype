@@ -1,9 +1,6 @@
 import styled from 'styled-components';
 
 export const AppContainer = styled.div`
-  padding: 20px;
-  max-width: 600px;
-  margin: 0 auto;
   height: 100dvh;
   box-sizing: border-box;
   position: relative;
@@ -13,7 +10,7 @@ export const ScrollableContainer = styled.div`
   height: calc(100% - env(safe-area-inset-bottom, 0px));
   overflow-y: auto;
   -webkit-overflow-scrolling: touch;
-  padding-top: env(safe-area-inset-top, 20px);
+  padding: 20px 20px;
 `;
 
 export const Overlay = styled.div`
