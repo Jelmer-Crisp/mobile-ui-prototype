@@ -59,31 +59,35 @@ function App() {
   const visibleCategories = allCategories.slice(0, visibleCategoryCount);
 
   const handleCategoryClick = (category) => {
+    // Check if this is one of the last three visible categories for both versions
+    const visibleCats = version === 1 
+      ? visibleCategories 
+      : visibleCategories.filter(cat => !hiddenCategories.includes(cat));
+    const categoryIndex = visibleCats.indexOf(category);
+    
+    if (categoryIndex >= visibleCats.length - 3 && visibleCategoryCount < allCategories.length) {
+      setVisibleCategoryCount(prev => Math.min(prev + 3, allCategories.length));
+      setShouldScroll(true);
+    }
+
     if (version === 1) {
       if (!selectedCategories.includes(category)) {
         setSelectedCategories([...selectedCategories, category]);
         setProducts(addProduct(products, categoryProducts[category][0], category));
         setShouldScroll(true);
-
-        // Check if this is one of the last three visible categories
-        const categoryIndex = visibleCategories.indexOf(category);
-        if (categoryIndex >= visibleCategoryCount - 3 && visibleCategoryCount < allCategories.length) {
-          setVisibleCategoryCount(prev => Math.min(prev + 3, allCategories.length));
-          setShouldScroll(true);
-        }
       } else {
         setCurrentCategory(category);
         setPanelOpen(true);
       }
     } else {
-      setSelectedCategories([...selectedCategories, category]);
-      setProducts(addProduct(products, categoryProducts[category][0], category));
-      setHiddenCategories([...hiddenCategories, category]);
-      setShouldScroll(true);
-
-      if ([...hiddenCategories, category].length === 3 && visibleCategoryCount < allCategories.length) {
-        setVisibleCategoryCount(prev => Math.min(prev + 3, allCategories.length));
+      if (!selectedCategories.includes(category)) {
+        setSelectedCategories([...selectedCategories, category]);
+        setProducts(addProduct(products, categoryProducts[category][0], category));
+        setHiddenCategories([...hiddenCategories, category]);
         setShouldScroll(true);
+      } else {
+        setCurrentCategory(category);
+        setPanelOpen(true);
       }
     }
   };
